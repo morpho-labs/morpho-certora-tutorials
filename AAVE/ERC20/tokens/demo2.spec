@@ -34,5 +34,31 @@ rule transferPreserveSupply {
     assert(balanceAfterUser1 + balanceAfterUser2 <= supplyAfter);
 }
 
-invariant userBalanceBounded(address userA, address userB)
-    balanceOf(userA) + balanceOf(userB) <= totalSupply()
+ghost address[] addresses {
+    init_state axiom addresses.length == 0;
+}
+
+ghost mapping(address => bool) addressBook {
+    init_state axiom forall address a. addressBook[a] = 0;
+}
+
+hook Sstore balances[KEY address user] uint256 newValue (uint256 oldValue) STORAGE {
+    if (!addressBook[user]) {
+        addresses.push(user);
+        addressBook[user] = true;
+    }
+}
+
+function sum(address[] addresses, mapping(address => bool) addressBook) returns (uint totalSum) {
+    uint totalSum;
+    for(uint i = 0; i < addresses.length; i++)
+        totalSum += balances[addresses[i]];
+    }
+
+invariant totalSupplyIsSum()
+    totalSupply() == sum(balances, addresses)
+
+
+
+invariant userBalanceBounded(address user)
+    balanceOf(user) <= totalSupply()
