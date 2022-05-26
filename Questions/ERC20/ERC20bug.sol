@@ -180,10 +180,6 @@ contract ERC20 is IERC20, IERC20Metadata {
     uint256 amount
   ) public virtual override returns (bool) {
     uint256 currentAllowance = _allowances[sender][msg.sender];
-    require(
-      currentAllowance >= amount,
-      "ERC20: transfer amount exceeds allowance"
-    );
     unchecked {
       _approve(sender, msg.sender, currentAllowance - amount);
     }

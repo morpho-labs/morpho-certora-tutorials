@@ -77,7 +77,7 @@ rule transferRevertConditions {
 //
 //     The above only check that transfer _does_ revert as appropriate.  We also
 //     want to say that these are the _only_ conditions when transfer reverts.
-//     
+//
 //     A good option is an "if and only if" expression:
 
     assert lastReverted <=> (
@@ -104,7 +104,3 @@ rule onlyOwnerCanDecreaseBalance {
 
     // Note: this rule is incorrect!  Fixing it is left as an exercise
 }
-
-
-
-

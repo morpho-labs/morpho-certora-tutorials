@@ -4,11 +4,11 @@
 
 </br>
 
-- [ ] Follow the installation instructions for the Certora Prover described in the following link: [Installation of Certora Prover](https://certora.atlassian.net/wiki/spaces/CPD/pages/7274497/Installation+of+Certora+Prover). 
+- [ ] Follow the installation instructions for the Certora Prover described in the following link: [Installation of Certora Prover](https://certora.atlassian.net/wiki/spaces/CPD/pages/7274497/Installation+of+Certora+Prover).
 
 > :warning: Make sure to download solidity compiler versions 8.7, 8.0, 7.6, 7.5 and 7.0 for the first 2 lessons of the course. You will need additional solc versions in the future; so whenever a solc error will rise, make sure to have the compiler version that you need on your local machine, located in a directory added to PATH.
 
-</br> 
+</br>
 
 - [ ] Install VSCode if you don't already have it (can be found in their [official website](https://code.visualstudio.com/)).
 

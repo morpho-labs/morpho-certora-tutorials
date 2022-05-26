@@ -18,20 +18,24 @@ invariant totalSupplyIsSumOfBalances()
 rule transferPreserveSupply {
     address sender; address receiver;
     uint amount; env e;
-    require sender == e.msg.sender;
-    mathint supplyBefore = totalSupply();
-    address u1; address u2;
-    require forall address a1. forall address a2. balanceOf(a1) + balanceOf(a2) <= totalSupply();
+    require (sender == e.msg.sender);
+    address user;
+    require (sender != receiver);
+    require (user != receiver);
+    require (user != sender);
 
+    mathint balanceBeforeUser = to_mathint(balanceOf(user));
+    mathint balanceBeforeSender = to_mathint(balanceOf(sender));
+    mathint balanceBeforeReceiver = to_mathint(balanceOf(receiver));
 
     transfer(e, receiver, amount);
 
-    mathint supplyAfter = totalSupply();
-    mathint balanceAfterUser1 = balanceOf(u1);
-    mathint balanceAfterUser2 = balanceOf(u2);
+    mathint balanceAfterUser = to_mathint(balanceOf(user));
+    mathint balanceAfterSender = to_mathint(balanceOf(sender));
+    mathint balanceAfterReceiver = to_mathint(balanceOf(receiver));
 
-    assert(supplyBefore == supplyAfter);
-    assert(balanceAfterUser1 + balanceAfterUser2 <= supplyAfter);
+    assert (balanceAfterUser + balanceAfterSender + balanceAfterReceiver ==
+            balanceBeforeUser + balanceBeforeSender + balanceBeforeReceiver);
 }
 
 ghost address[] addresses {

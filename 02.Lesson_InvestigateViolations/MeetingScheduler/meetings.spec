@@ -54,8 +54,9 @@ rule checkStartedToStateTransition(method f, uint256 meetingId) {
 	uint8 stateBefore = getStateById(e, meetingId);
 	f(e, args);
 	
-	assert (stateBefore == 2 => (getStateById(e, meetingId) == 2 || getStateById(e, meetingId) == 4)), "the status of the meeting changed from STARTED to an invalid state";
-	assert ((stateBefore == 2 && getStateById(e, meetingId) == 4) => f.selector == endMeeting(uint256).selector), "the status of the meeting changed from STARTED to ENDED through a function other then endMeeting()";
+	uint8 stateAfter = getStateById(e, meetingId);
+	assert (stateBefore == 2 => (stateAfter == 2 || stateAfter == 3)), "the status of the meeting changed from STARTED to an invalid state";
+	assert ((stateBefore == 2 && stateAfter == 3) => f.selector == endMeeting(uint256).selector), "the status of the meeting changed from STARTED to ENDED through a function other then endMeeting()";
 }
 
 
@@ -79,7 +80,10 @@ rule monotonousIncreasingNumOfParticipants(method f, uint256 meetingId) {
 	env e;
 	calldataarg args;
 	uint256 numOfParticipantsBefore = getNumOfParticipents(e, meetingId);
+	uint statusBefore = getStateById(e, meetingId);
+	require statusBefore == 0 => numOfParticipantsBefore == 0;
 	f(e, args);
+	uint statusAfter = getStateById(e, meetingId);
     uint256 numOfParticipantsAfter = getNumOfParticipents(e, meetingId);
 
 	assert numOfParticipantsBefore <= numOfParticipantsAfter, "the number of participants decreased as a result of a function call";

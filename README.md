@@ -1,4 +1,4 @@
-# Certora Tutorials 
+# Certora Tutorials
 
 ## Hello and welcome to Certora's beginner's course!
 
@@ -21,7 +21,7 @@ During the course, you will read articles and documentations, watch videos, and 
 </br>
 
 The course is built as 17 lessons, each tries to address exactly one subject/feature.
-The course will be available on Certora's Github as a repository containing Lessons 1-17. It contains README files that provide everything you need to complete the tasks and exercises. 
+The course will be available on Certora's Github as a repository containing Lessons 1-17. It contains README files that provide everything you need to complete the tasks and exercises.
 You may fork this repository or open a branch to push your solutions as you advance. < Nurit : maybe>
 Some exercises will be checked by yourself, some by teammates, and some directly by the Certora team.
 

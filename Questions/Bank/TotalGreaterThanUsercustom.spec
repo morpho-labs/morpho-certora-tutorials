@@ -15,23 +15,6 @@
 **/
 
 
-rule totalFundsAfterDeposit(uint256 amount) {
-	env e; 
-	
-	// Additional varaibles to aid in understanding violation
-	uint256 userFundsBefore = getFunds(e, e.msg.sender);
-	uint256 totalBefore = getTotalFunds(e);
-	
-	deposit(e, amount);
-	
-	uint256 userFundsAfter = getFunds(e, e.msg.sender);
-	uint256 totalAfter = getTotalFunds(e);
-	
-	// Verify that the total funds of the system is at least the current funds of the msg.sender.
-	assert ( totalAfter >=  userFundsAfter, "Total funds are less than a user's funds " );
-}
-
-
 
 rule totalFundsAfterDepositWithPrecondition(uint256 amount) {
 	env e; 
@@ -39,10 +22,10 @@ rule totalFundsAfterDepositWithPrecondition(uint256 amount) {
 	uint256 userFundsBefore = getFunds(e, e.msg.sender);
 	uint256 totalBefore = getTotalFunds(e);
     
-	// require forall address a. getFunds(e, a) <= getTotalFunds(e);
+	require forall address a. getFunds(e, a) <= getTotalFunds(e);
 
     // Assume that in the current state before calling deposit, the total funds of the system is at least the user funds.
-    require totalBefore >= userFundsBefore; 
+    // require totalBefore >= userFundsBefore; 
 	deposit(e, amount);
 	
 	uint256 userFundsAfter = getFunds(e, e.msg.sender);

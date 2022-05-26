@@ -136,7 +136,7 @@ certoraRun BankFixed.sol:Bank --verify Bank:TotalGreaterThanUser.spec --solc sol
 > :bulb: Notice the useful flag `--rule` that allows running one rule from the entire spec file.
 
 A violation is found. 
-Do you understand why?  
+Do you understand why?
 Adding additional variables to the rule can help understand the counter-example. 
 Try adding the ***helper variables*** `userFundsBefore` and `totalBefore`.
 
@@ -196,7 +196,7 @@ Click on the function name to see the counter-example.
 
 By generalizing this rule to all functions, we discovered another issue in `transfer`. 
 Again, adding local variables can aid in understanding violations.
-One can transfer funds to himself to gain more assets. 
+One can transfer funds to himself to gain more assets.
 
 Run this rule on the original Bank version:
 
