@@ -1,4 +1,5 @@
-pragma solidity ^0.7.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 /** Broda Election Overview
  * @dev This contract simulates a Borda election.
@@ -6,7 +7,7 @@ pragma solidity ^0.7.0;
  *
  * The election system follows the following rules:
  *
- * - Every user with an Etheruem address can vote in the elections.
+ * - Every user with an Ethereum address can vote in the elections.
  * - A voter must register their address with some personal details.
  * - Once a voter has registered, they are allowed to vote once to 3 distinct contenders as they wish.
  * - The voter's 1st choice gets 3 points, their 2nd choice gets 2 points, and their 3rd choice gets 1 point.

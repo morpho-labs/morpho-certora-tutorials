@@ -1,23 +1,9 @@
-pragma solidity ^0.7.0;
-library SafeMath {
-	function safeAdd(uint256 a, uint256 b) internal pure returns (uint256) {
-        uint256 c = a + b;
-        require(c >= a, "SafeMath: addition overflow");
-        return c;
-    }
-
-	function safeSub(uint256 x, uint256 y) internal pure returns(uint256) {
-		assert(x >= y);
-		uint256 z = x - y;
-		return z;
-    }
-}
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 import "./IBorda.sol";
 
 contract Borda is IBorda {
-
-    using SafeMath for uint256;
   
     // A list of voters with some data on them.
     mapping (address => Voters) _voters;
@@ -77,7 +63,7 @@ contract Borda is IBorda {
         require ( first != second && first != third && second != third, "you've tried to vote for the same more than once");
         
         Voters memory voter_details = _voters[msg.sender];
-        _voters[msg.sender].vote_attempts = voter_details.vote_attempts.safeAdd(1);
+        _voters[msg.sender].vote_attempts++;
         if (voter_details.voted){
            require(voter_details.vote_attempts >= 3, "you've already voted. If you reach 3 attempts you will be blocked");
            if (!voter_details.black_listed){
@@ -96,7 +82,7 @@ contract Borda is IBorda {
     }
 
     function voteTo(address contender, uint256 points) private {
-        uint256 contender_points = _contenders[contender].points.safeAdd(points);
+        uint256 contender_points = _contenders[contender].points + points;
         _contenders[contender].points = contender_points;
         if (contender_points > pointsOfWinner) {
             winner = contender;
