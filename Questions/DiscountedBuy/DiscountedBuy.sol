@@ -10,11 +10,6 @@ contract DiscountedBuy {
     uint256 public basePrice = 1 ether;
     mapping(address => uint256) public objectBought;
 
-    // added for verifying
-    function nbObjectBought(address user) public view returns(uint) {
-        return objectBought[user];
-    }
-
     /// @dev Buy an object.
     function buy() public payable {
         require(msg.value * (1 + objectBought[msg.sender]) == basePrice);
@@ -26,5 +21,10 @@ contract DiscountedBuy {
      */
     function price() public view returns (uint256) {
         return basePrice / (1 + objectBought[msg.sender]);
+    }
+
+    function wrong() public view returns(bool) {
+        require (basePrice == 2 ether);
+        return true;
     }
 }
