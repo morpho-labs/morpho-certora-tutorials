@@ -22,9 +22,4 @@ contract DiscountedBuy {
     function price() public view returns (uint256) {
         return basePrice / (1 + objectBought[msg.sender]);
     }
-
-    function wrong() public view returns(bool) {
-        require (basePrice == 2 ether);
-        return true;
-    }
 }

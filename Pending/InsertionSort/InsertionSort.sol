@@ -18,12 +18,4 @@ contract InsertionSort {
     function length() public view returns(uint) {
         return array.length;
     }
-
-    function sorted() public view returns(bool) {
-        if (array.length <= 1) return true;
-        for(uint i; i < array.length - 1; i++) {
-            if(array[i] > array[i+1]) return false;
-        }
-        return true;
-    }
 }
