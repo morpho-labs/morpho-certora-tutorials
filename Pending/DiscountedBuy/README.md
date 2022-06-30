@@ -1,7 +1,4 @@
-## How to reproduce
-
-`make` does not go through, prices are not discounted ?
-
 ## Questions
 
-- How to take into account the invariant for rules (like requireInvariant)
+- How to take into account the invariant for rules (like requireInvariant) ?
+- Is it possible to write 1 ether easily ?
