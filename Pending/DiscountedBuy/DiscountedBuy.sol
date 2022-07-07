@@ -12,6 +12,7 @@ contract DiscountedBuy {
 
     /// @dev Buy an object.
     function buy() public payable {
+        require (objectBought[msg.sender] < 1000);
         require(msg.value * (1 + objectBought[msg.sender]) == basePrice);
         objectBought[msg.sender] += 1;
     }

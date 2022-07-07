@@ -1,11 +1,10 @@
 To show:
 
-- Bitmasks
 - DiscountedBuy
+- InsertionSort
 
 Still not working:
 
 - Bank
-- InsertionSort
 - DollarSign
 - BytesConversion
