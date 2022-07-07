@@ -6,8 +6,9 @@ methods {
 }
 
 function sortedAt(uint i) returns bool {
-    return (i + 1 < length() => array(i) < array(i+1));
+    return (i + 1 < length() => array(i) <= array(i+1));
 }
 
 invariant sortedEverywhere(uint256 i)
     sortedAt(i)
+{ preserved { requireInvariant sortedEverywhere(to_uint256(i-1)); } }
