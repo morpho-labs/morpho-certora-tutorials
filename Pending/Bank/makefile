@@ -1,5 +1,4 @@
-%:
-	certoraRun Bank.sol --verify "Bank:TotalGreaterThanUser$*.spec" \
-    --optimistic_loop \
-    --msg "Bank${*}"\
+all:
+	certoraRun Bank.sol --verify Bank:TotalGreaterThanBalance.spec \
+    --msg "Bank"\
     --send_only

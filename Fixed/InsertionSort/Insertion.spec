@@ -2,7 +2,6 @@ methods {
     insert(uint) envfree;
     array(uint) returns (uint) envfree;
     length() returns (uint) envfree;
-    sorted() returns (bool) envfree;
 }
 
 function sortedAt(uint i) returns bool {

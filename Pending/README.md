@@ -1,10 +1,9 @@
 To show:
 
 - DiscountedBuy
-- InsertionSort
+- Bank
 
 Still not working:
 
-- Bank
 - DollarSign
 - BytesConversion

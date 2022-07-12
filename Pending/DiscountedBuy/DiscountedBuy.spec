@@ -14,8 +14,6 @@ rule successiveBuysAreDiscounted() {
     env e1; env e2;
     require (e1.msg.sender == e2.msg.sender);
 
-    require (basePrice() == 1000000000000000000);
-
     uint paidPrice1 = e1.msg.value;
     buy(e1);
     uint paidPrice2 = e2.msg.value;
@@ -32,9 +30,12 @@ rule invariantTakenIntoAccount() {
 
 rule alwaysPossibleToBuyBeforeOneThousand() {
     requireInvariant basePriceIsOne();
-    env e;
+    env e; env e_price;
+    require (e.msg.sender == e_price.msg.sender);
+    uint256 priceCalculated = price(e_price);
+ 
     uint256 objectsBought = objectBought(e.msg.sender);
-    uint256 priceCalculated = price(e);
+    uint256 basePriceMem = basePrice();
 
     require (objectsBought < 1000);
     require (e.msg.value == priceCalculated);

@@ -1,4 +1,9 @@
 # How to reproduce
 
-`make classic` goes through but `make custom` doesn't.
-Even though the custom invariant is stronger than the 'classic' one.
+Run `make`.
+
+# Questions
+
+- Why does the rule `weakRequireDepositSender` go through but `strongRequireDepositSender` does not ?
+- Why the invariant `TotalGreaterThanUser` is preserved for deposit but not for withdraw ?
+-
