@@ -1,6 +1,7 @@
 methods {
     objectBought(address) returns (uint) envfree
     basePrice() returns (uint256) envfree
+    balance(address) returns (uint256) envfree
 }
 
 definition oneEth() returns uint256 =
@@ -32,6 +33,7 @@ rule alwaysPossibleToBuyBeforeOneThousand() {
     requireInvariant basePriceIsOne();
     env e; env e_price;
     require (e.msg.sender == e_price.msg.sender);
+    require (balance(e.msg.sender) >= oneEth());
     uint256 priceCalculated = price(e_price);
  
     uint256 objectsBought = objectBought(e.msg.sender);

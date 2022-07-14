@@ -1,6 +1,7 @@
 methods {
 	getFunds(address) returns (uint256) envfree
 	getTotalFunds() returns (uint256) envfree
+	initialized() returns (bool) envfree
 }
 
 rule weakRequireDepositSender(uint256 amount) {
@@ -43,16 +44,24 @@ rule strongRequireDepositSender(uint256 amount) {
 // 	getTotalFunds() >= getFunds(user)
 // { preserved { requireInvariant TotalGreaterThanUser(user); } }
 
-ghost ghostTotalFunds() returns uint256;
+ghost ghostTotalFunds() returns uint256
+{ init_state axiom  ghostTotalFunds() == 0; }
+
+invariant totalFundsAtStart() 
+	! initialized() => getTotalFunds() == 0
+
+invariant UserFundsAtStart(address user) 
+	! initialized() => getFunds(user) == 0
 
 hook Sstore funds[KEY address user] uint256 fundsUser (uint256 oldFundsUser) STORAGE {
-	havoc ghostTotalFunds assuming // what is the use of havoc ?
+	havoc ghostTotalFunds assuming
 		ghostTotalFunds@new() == ghostTotalFunds@old() + fundsUser - oldFundsUser;
 }
 
-invariant HookTotalGeaterThanUser(address user) // preserved with deposit but not withdraw, why ?
-	ghostTotalFunds() > getFunds(user)
+invariant HookTotalGreaterThanUser(address user) // preserved with deposit but not withdraw, why ?
+	ghostTotalFunds() >= getFunds(user)
+{ preserved with (env e) { require forall address user. user != e.msg.sender => ghostTotalFunds() >= getFunds(user) + getFunds(e.msg.sender); } }
 
-invariant HookTotalEqualTotal() // how to declare ghostTotalFunds to be equal to getTotalFunds at construction of the contract ?
+invariant HookTotalEqualTotal()
 	ghostTotalFunds() == getTotalFunds()
 

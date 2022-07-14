@@ -1,4 +1,5 @@
 all:
 	certoraRun Bank.sol --verify Bank:TotalGreaterThanBalance.spec \
-    --msg "Bank"\
+    --settings -optimisticFallback=true \
+    --msg "Bank" \
     --send_only

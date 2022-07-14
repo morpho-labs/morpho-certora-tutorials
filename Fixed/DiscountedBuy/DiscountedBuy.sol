@@ -22,4 +22,8 @@ contract DiscountedBuy {
     function price() public view returns (uint256) {
         return basePrice / (1 + objectBought[msg.sender]);
     }
+
+    function balance(address user) public view returns (uint256) {
+        return user.balance;
+    }
 }

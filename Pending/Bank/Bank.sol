@@ -3,6 +3,10 @@ pragma solidity ^0.8.0;
 
 contract Bank {
 
+  bool public initialized;
+
+  constructor() { initialized = true;}
+
   mapping(address => uint256) private funds;
   uint256 private totalFunds;
 
