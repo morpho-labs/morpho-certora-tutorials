@@ -20,6 +20,7 @@ rule weakRequireDepositSender(uint256 amount) {
 	assert ( totalAfter >=  userFundsAfter, "Total funds are less than a user's funds " );
 }
 
+// FAILS even though it has a stronger require
 rule strongRequireDepositSender(uint256 amount) {
 	env e; 
 	
@@ -36,22 +37,19 @@ rule strongRequireDepositSender(uint256 amount) {
 	assert ( totalAfter >=  userFundsAfter, "Total funds are less than a user's funds " );
 }
 
-
-// invariant TotalGreaterThanSumOfTwoUsers(address user1, address user2)
-// 	getTotalFunds() >= getFunds(user1) + getFunds(user2)
-
-// invariant TotalGreaterThanUser(address user) // preserved with deposit but not withdraw, why ?
-// 	getTotalFunds() >= getFunds(user)
-// { preserved { requireInvariant TotalGreaterThanUser(user); } }
-
 ghost ghostTotalFunds() returns uint256
 { init_state axiom  ghostTotalFunds() == 0; }
 
+invariant alwaysIntialized()
+	initialized()
+
 invariant totalFundsAtStart() 
 	! initialized() => getTotalFunds() == 0
+{ preserved { requireInvariant alwaysIntialized(); } }
 
 invariant UserFundsAtStart(address user) 
 	! initialized() => getFunds(user) == 0
+{ preserved { requireInvariant alwaysIntialized(); } }
 
 hook Sstore funds[KEY address user] uint256 fundsUser (uint256 oldFundsUser) STORAGE {
 	havoc ghostTotalFunds assuming
@@ -60,8 +58,9 @@ hook Sstore funds[KEY address user] uint256 fundsUser (uint256 oldFundsUser) STO
 
 invariant HookTotalGreaterThanUser(address user) // preserved with deposit but not withdraw, why ?
 	ghostTotalFunds() >= getFunds(user)
-{ preserved with (env e) { require forall address user. user != e.msg.sender => ghostTotalFunds() >= getFunds(user) + getFunds(e.msg.sender); } }
+{ preserved with (env e) { require (user != e.msg.sender => ghostTotalFunds() >= getFunds(user) + getFunds(e.msg.sender)); } 
+// FAILS with the added `forall address user.` in the require
+}
 
 invariant HookTotalEqualTotal()
 	ghostTotalFunds() == getTotalFunds()
-
